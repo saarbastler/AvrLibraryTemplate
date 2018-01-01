@@ -1,0 +1,2 @@
+${AVRDUDE_PATH}\avrdude.exe -C${AVRDUDE_CONFIG_FILE} -v -p${CPU} -c${PROGRAM_ALGO} -PCOM${COMPORT} -b${BAUDRATE} -D -Uflash:w:""${WORKSPACE_DIR}\${ASSEMBLY_NAME}\Debug\${ASSEMBLY_NAME}.hex"":i
+${WORKSPACE_DIR}\terminal
