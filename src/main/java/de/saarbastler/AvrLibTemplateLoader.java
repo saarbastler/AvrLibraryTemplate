@@ -10,6 +10,9 @@ import java.net.URL;
 import de.saarbastler.model.ConfigurationData;
 import freemarker.cache.TemplateLoader;
 
+/**
+ * The Class Freemarker TemplateLoader to load the resource from the jar file
+ */
 public class AvrLibTemplateLoader implements TemplateLoader
 {
 

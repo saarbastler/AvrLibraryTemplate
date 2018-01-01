@@ -34,6 +34,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
+/**
+ * The Main Class showing the form and executing the templates.
+ */
 public class AvrLibTemplate extends Application
 {
   private ConfigurationData configurationData;
@@ -53,8 +56,6 @@ public class AvrLibTemplate extends Application
     mainStage = primaryStage;
     mainStage.setTitle( "SaarBastler AVR Library Project" );
 
-    // configurationData= new ConfigurationData();
-    // configurationData.initAndSave();
     try
     {
       configurationData = ConfigurationData.loadConfig();
@@ -151,47 +152,11 @@ public class AvrLibTemplate extends Application
     {
       Configuration cfg = new Configuration( Configuration.VERSION_2_3_25 );
       cfg.setTemplateLoader( templateLoader );
-      // cfg.setDirectoryForTemplateLoading( new File( "templates" ) );
       cfg.setDefaultEncoding( "UTF-8" );
       cfg.setTemplateExceptionHandler( TemplateExceptionHandler.RETHROW_HANDLER );
       cfg.setLogTemplateExceptions( false );
 
       configurationData.generateProject( cfg, values );
-      // File solutionDir = new File( values.get( WORKSPACE_DIR ).toString() );
-      // solutionDir.mkdirs();
-      //
-      // processTemplate( cfg, "atsln.ftlh", new File( solutionDir, values.get(
-      // ASSEMBLY_NAME ).toString() + ".atsln" ),
-      // values );
-      //
-      // processTemplate( cfg, "program.ftlh", new File( solutionDir,
-      // "program.cmd" ), values );
-      //
-      // processTemplate( cfg, "terminal.ftlh", new File( solutionDir,
-      // "terminal.cmd" ), values );
-      //
-      // File workspaceDir = new File( solutionDir, values.get( ASSEMBLY_NAME
-      // ).toString() );
-      // workspaceDir.mkdir();
-      //
-      // processTemplate( cfg, "cppproj.ftlh", new File( workspaceDir,
-      // values.get( ASSEMBLY_NAME ) + ".cppproj" ),
-      // values );
-      //
-      // processTemplate( cfg, "Device.h.ftlh", new File( workspaceDir,
-      // "Device.h" ), values );
-      //
-      // processTemplate( cfg, "io_config.h.ftlh", new File( workspaceDir,
-      // "io_config.h" ), values );
-      //
-      // processTemplate( cfg, "saba.h.ftlh", new File( workspaceDir, "saba.h"
-      // ), values );
-      //
-      // processTemplate( cfg, "saba.cpp.ftlh", new File( workspaceDir,
-      // "saba.cpp" ), values );
-      //
-      // processTemplate( cfg, "main.cpp.ftlh", new File( workspaceDir,
-      // "main.cpp" ), values );
     }
     catch (Exception e)
     {
@@ -203,17 +168,6 @@ public class AvrLibTemplate extends Application
 
       e.printStackTrace();
     }
-    // catch (TemplateException e)
-    // {
-    // Alert alert = new Alert( AlertType.ERROR );
-    // alert.setTitle( "TemplateException" );
-    // alert.setHeaderText( "Template generation" );
-    // alert.setContentText( e.getMessage() );
-    // alert.showAndWait();
-    //
-    // e.printStackTrace();
-    // }
-
   }
 
 }

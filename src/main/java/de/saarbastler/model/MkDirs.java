@@ -10,25 +10,23 @@ import javax.xml.bind.annotation.XmlType;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 
+/**
+ * Create direcories
+ */
 @XmlType(name = "mkdirs")
-// @XmlRootElement
 public class MkDirs extends TemplateExecuter
 {
+
+  /** The path. */
   @XmlElement
   private String path;
 
-  public MkDirs(String path)
-  {
-    super();
-    this.path = path;
-  }
-
-  public MkDirs()
-  {
-    super();
-    // TODO Auto-generated constructor stub
-  }
-
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.saarbastler.model.TemplateExecuter#execute(freemarker.template.
+   * Configuration, java.util.Map)
+   */
   @Override
   public void execute(Configuration cfg, Map<String, String> values) throws TemplateException, IOException
   {

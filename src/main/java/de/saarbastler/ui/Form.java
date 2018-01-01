@@ -1,24 +1,11 @@
 package de.saarbastler.ui;
 
-import static de.saarbastler.StringConstants.ASSEMBLY_NAME;
-import static de.saarbastler.StringConstants.AVRDEVICE;
-import static de.saarbastler.StringConstants.AVRDUDE_CONFIG_FILE;
-import static de.saarbastler.StringConstants.AVRDUDE_PATH;
-import static de.saarbastler.StringConstants.AVR_LIB_PATH_ABSOLUTE;
-import static de.saarbastler.StringConstants.BAUDRATE;
-import static de.saarbastler.StringConstants.COMPORT;
-import static de.saarbastler.StringConstants.F_CPU;
-import static de.saarbastler.StringConstants.PROGRAM_ALGO;
-import static de.saarbastler.StringConstants.WORKSPACE_DIR;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import de.saarbastler.model.ConfigurationData;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -34,10 +21,10 @@ public class Form
 
   private Optional<EventHandler<ActionEvent>> eventHandler = Optional.empty();
 
-  private Map<String,String> values;
-  
+  private Map<String, String> values;
+
   private ConfigurationData configurationData;
-  
+
   public Form(ConfigurationData configurationData)
   {
     super();
@@ -53,33 +40,10 @@ public class Form
     grid.setVgap( 10 );
     grid.setPadding( new Insets( 25, 25, 25, 25 ) );
 
-    fields = new ArrayList<>();
-
-    fields.add( new FieldDirectory( "AvrDude Path", AVRDUDE_PATH ).addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add(
-        new FieldFile( "AvrDude Config file", AVRDUDE_CONFIG_FILE ).addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add( new FieldList( "CPU", AVRDEVICE, FXCollections.observableList( configurationData.getDevices() ) ).addToGrid( window, grid,
-        fields.size() + 1 ) );
-
-    fields
-        .add( new FieldList( "Programming algorithm", PROGRAM_ALGO, FXCollections.observableList( configurationData.getProgramAlgorithms() ) )
-            .addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add( new FieldInteger( "Com Port", COMPORT ).addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add( new FieldList( "Baudrate", BAUDRATE, FXCollections.observableList( configurationData.getBaudrates() ) ).addToGrid( window,
-        grid, fields.size() + 1 ) );
-
-    fields
-        .add( new FieldDirectory( "Workspace Directory", WORKSPACE_DIR ).addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add( new FieldDirectory( "Library Path", AVR_LIB_PATH_ABSOLUTE ).addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add( new FieldString( "Assembly name:", ASSEMBLY_NAME ).addToGrid( window, grid, fields.size() + 1 ) );
-
-    fields.add( new FieldInteger( "CPU Frequency", F_CPU ).addToGrid( window, grid, fields.size() + 1 ) );
+    fields = configurationData.getFields();
+    int index = 0;
+    for (Field field : fields)
+      field.addToGrid( window, grid, ++index );
 
     Button start = new Button( "Start" );
     HBox hbBtn = new HBox( 10 );
@@ -98,7 +62,7 @@ public class Form
           values.put( field.getKey(), field.getValue() );
         }
 
-        Form.this.values= values;
+        Form.this.values = values;
         eventHandler.ifPresent( eh -> eh.handle( new ActionEvent() ) );
       }
     } );
@@ -120,10 +84,9 @@ public class Form
     this.values = values;
     for (Field field : fields)
     {
-      if( this.values.containsKey( field.getKey() ))
-        field.setValue( this.values.get( field.getKey() ));
+      if (this.values.containsKey( field.getKey() ))
+        field.setValue( this.values.get( field.getKey() ) );
     }
   }
-  
-  
+
 }

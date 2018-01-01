@@ -18,7 +18,6 @@ import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -26,37 +25,59 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import de.saarbastler.ui.Field;
+import de.saarbastler.ui.FieldDirectory;
+import de.saarbastler.ui.FieldFile;
+import de.saarbastler.ui.FieldInteger;
+import de.saarbastler.ui.FieldList;
+import de.saarbastler.ui.FieldString;
 import freemarker.template.Configuration;
 
+/**
+ * The Class ConfigurationData is loaded from XML during startup. It defines the
+ * UI and the template execution.
+ */
 @XmlRootElement
 @XmlSeeAlso({ MkDirs.class, ProcessTemplate.class })
 public class ConfigurationData
 {
+
+  /** The config file name. */
   public static final String RESOURCE_CONFIG = "config.xml";
+
+  /** Workaround to run it in eclipse. */
   public static final String ECLIPSE_RESOURCE_PATH = "src/main/resources/";
+
+  /** Workaround to run it in eclipse. */
   public static final String ECLIPSE_RESOURCE_CONFIG = ECLIPSE_RESOURCE_PATH + RESOURCE_CONFIG;
 
+  /** Special treatment for devices macros. */
   @XmlElementWrapper
   @XmlElement(name = "device")
   private List<Device> devices = new ArrayList<>();
 
-  @XmlElementWrapper(name = "programAlgorithms")
-  @XmlElement(name = "programAlgorithm")
-  private List<String> programAlgorithms = new ArrayList<>();
-
-  @XmlElementWrapper(name = "baudrates")
-  @XmlElement(name = "baudrate")
-  private List<String> baudrates = new ArrayList<>();
-
+  /** The template executers. */
   @XmlElementWrapper(name = "templateExecuters")
   @XmlElements({ @XmlElement(name = "mkdirs", type = MkDirs.class, required = false),
       @XmlElement(name = "processTemplate", type = ProcessTemplate.class, required = false) })
   private List<TemplateExecuter> templateExecuters = new ArrayList<>();
 
-  public ConfigurationData()
-  {
-  }
+  /** The UI fields. */
+  @XmlElementWrapper(name = "fields")
+  @XmlElements({ @XmlElement(name = "list", type = FieldList.class, required = false),
+      @XmlElement(name = "directory", type = FieldDirectory.class, required = false),
+      @XmlElement(name = "file", type = FieldFile.class, required = false),
+      @XmlElement(name = "integer", type = FieldInteger.class, required = false),
+      @XmlElement(name = "string", type = FieldString.class, required = false) })
+  private List<Field> fields = new ArrayList<>();
 
+  /**
+   * Load the XML config.
+   *
+   * @return the configuration data
+   * @throws JAXBException
+   *           the JAXB exception
+   */
   public static ConfigurationData loadConfig() throws JAXBException
   {
     JAXBContext jaxbContext = JAXBContext.newInstance( ConfigurationData.class );
@@ -74,44 +95,10 @@ public class ConfigurationData
   }
 
   /**
-   * Initialzes data the and save. Only used to create an initial config.xml
-   * file.
+   * Gets the devices.
    *
-   * @throws JAXBException
-   *           the JAXB exception
-   * @throws PropertyException
-   *           the property exception
+   * @return the devices
    */
-  // public void initAndSave() throws JAXBException, PropertyException
-  // {
-  // devices.add( new Device( "m8", "ATmega8", "atmega8" ) );
-  // devices.add( new Device( "m328p", "ATmega328P", "atmega328p" ) );
-  // devices.add( new Device( "m32u4", "ATmega32u4", "atmega32u4" ) );
-  // devices.add( new Device( "m2560", "ATmega2560", "atmega2560" ) );
-  //
-  // programAlgorithms.add( "wiring" );
-  // programAlgorithms.add( "arduino" );
-  // programAlgorithms.add( "stk500" );
-  // programAlgorithms.add( "AVR109" );
-  //
-  // baudrates.add( "19200" );
-  // baudrates.add( "38400" );
-  // baudrates.add( "57600" );
-  // baudrates.add( "115200" );
-  //
-  // templateExecuters.add( new MkDirs( "${WORKSPACE_DIR}" ) );
-  // templateExecuters.add( new ProcessTemplate( "atsln.ftlh",
-  // "${ASSEMBLY_NAME}.atsln" ) );
-  //
-  // JAXBContext jaxbContext = JAXBContext.newInstance( ConfigurationData.class
-  // );
-  // Marshaller marshaller = jaxbContext.createMarshaller();
-  //
-  // marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, true );
-  //
-  // marshaller.marshal( this, new File( "config.xml" ) );
-  // }
-
   public List<String> getDevices()
   {
     List<String> result = new ArrayList<>( devices.size() );
@@ -120,16 +107,22 @@ public class ConfigurationData
     return result;
   }
 
-  public List<String> getProgramAlgorithms()
+  /**
+   * Gets the fields.
+   *
+   * @return the fields
+   */
+  public List<Field> getFields()
   {
-    return programAlgorithms;
+    return fields;
   }
 
-  public List<String> getBaudrates()
-  {
-    return baudrates;
-  }
-
+  /**
+   * Some special treatment, the Macros CPU and MCU are derived from AVRDEVICE.
+   *
+   * @param values
+   *          the values
+   */
   public void preprocessData(Map<String, String> values)
   {
     String avrDevice = values.get( AVRDEVICE );
@@ -148,12 +141,19 @@ public class ConfigurationData
     values.put( AVR_LIB_PATH_RELATIVE, relative.toString() );
   }
 
+  /**
+   * Generate the project.
+   *
+   * @param cfg
+   *          the cfg
+   * @param values
+   *          the values
+   * @throws Exception
+   *           the exception
+   */
   public void generateProject(Configuration cfg, Map<String, String> values) throws Exception
   {
     for (TemplateExecuter executer : templateExecuters)
-    {
       executer.execute( cfg, values );
-    }
-
   }
 }

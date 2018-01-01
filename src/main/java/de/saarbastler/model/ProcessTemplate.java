@@ -10,29 +10,27 @@ import javax.xml.bind.annotation.XmlType;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
+/**
+ * The Class executes a freemarker template.
+ */
 @XmlType(name = "processTemplate")
-// @XmlRootElement
 public class ProcessTemplate extends TemplateExecuter
 {
+
+  /** The template name. */
   @XmlElement
   private String templateName;
 
+  /** The file. */
   @XmlElement
   private String file;
 
-  public ProcessTemplate()
-  {
-    super();
-    // TODO Auto-generated constructor stub
-  }
-
-  public ProcessTemplate(String templateName, String file)
-  {
-    super();
-    this.templateName = templateName;
-    this.file = file;
-  }
-
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.saarbastler.model.TemplateExecuter#execute(freemarker.template.
+   * Configuration, java.util.Map)
+   */
   @Override
   public void execute(Configuration cfg, Map<String, String> values) throws Exception
   {

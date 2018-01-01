@@ -1,5 +1,7 @@
 package de.saarbastler.ui;
 
+import javax.xml.bind.annotation.XmlType;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -8,14 +10,19 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
+/**
+ * The simple integer input control
+ */
+@XmlType(name = "integer")
 public class FieldInteger extends FieldText
 {
 
-  public FieldInteger(String label, String key)
-  {
-    super( label, key );
-  }
-
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.saarbastler.ui.Field#addToGrid(javafx.stage.Window,
+   * javafx.scene.layout.GridPane, int)
+   */
   @Override
   public Field addToGrid(Window window, GridPane gridPane, int row)
   {
@@ -31,6 +38,11 @@ public class FieldInteger extends FieldText
     return this;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.saarbastler.ui.FieldText#getValue()
+   */
   @Override
   public String getValue()
   {
