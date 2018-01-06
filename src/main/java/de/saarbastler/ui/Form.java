@@ -66,13 +66,12 @@ public class Form
       tabPane.getTabs().add( tab );
     }
 
-    Button start = new Button( "Start" );
+    Button start = new Button( "write Template" );
     HBox hbBtn = new HBox( 10 );
-    hbBtn.setAlignment( Pos.BOTTOM_RIGHT );
+    hbBtn.setAlignment( Pos.BOTTOM_CENTER );
+    hbBtn.setPadding( new Insets( 5, 5, 5, 5 ) );
     hbBtn.getChildren().add( start );
     vbox.getChildren().add( hbBtn );
-
-    // grid.add( hbBtn, 1, fields.size() + 1 );
 
     start.setOnAction( new EventHandler<ActionEvent>()
     {

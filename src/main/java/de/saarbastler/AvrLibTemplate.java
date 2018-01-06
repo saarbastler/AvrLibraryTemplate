@@ -149,6 +149,12 @@ public class AvrLibTemplate extends Application
       cfg.setLogTemplateExceptions( false );
 
       configurationData.generateProject( cfg, values );
+
+      Alert alert = new Alert( AlertType.INFORMATION );
+      alert.setTitle( "Project generated" );
+      alert.setHeaderText( "Project succesful generated" );
+      alert.setContentText( values.get( StringConstants.WORKSPACE_DIR ) );
+      alert.showAndWait();
     }
     catch (Exception e)
     {

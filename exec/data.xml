@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_101" class="java.beans.XMLDecoder">
+<java version="1.8.0_131" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
    <string>AVRDUDE_CONFIG_FILE</string>
    <string>C:\Tools\avrdude6.3\avrdude328pb.conf</string>
-  </void>
-  <void method="put">
-   <string>COMPORT</string>
-   <string>7</string>
-  </void>
-  <void method="put">
-   <string>AVRDEVICE</string>
-   <string>ATmega328P</string>
-  </void>
-  <void method="put">
-   <string>PROGRAM_ALGO</string>
-   <string>arduino</string>
-  </void>
-  <void method="put">
-   <string>AVRDUDE_PATH</string>
-   <string>C:\Tools\avrdude6.3</string>
   </void>
   <void method="put">
    <string>F_CPU</string>
@@ -30,16 +14,44 @@
    <string>C:\HardwareProjekte\SaBa</string>
   </void>
   <void method="put">
-   <string>BAUDRATE</string>
-   <string>115200</string>
+   <string>GENERATE_PROGRAM_CMD</string>
+   <string>true</string>
+  </void>
+  <void method="put">
+   <string>GENERATE_TERMINAL_CMD</string>
+   <string>true</string>
   </void>
   <void method="put">
    <string>WORKSPACE_DIR</string>
-   <string>C:\Temp\LTest</string>
+   <string>C:\HardwareProjekte\Test</string>
   </void>
   <void method="put">
    <string>ASSEMBLY_NAME</string>
-   <string>LTest</string>
+   <string>Test</string>
+  </void>
+  <void method="put">
+   <string>COMPORT</string>
+   <string>7</string>
+  </void>
+  <void method="put">
+   <string>AVRDEVICE</string>
+   <string>ATmega2560</string>
+  </void>
+  <void method="put">
+   <string>PROGRAM_ALGO</string>
+   <string>wiring</string>
+  </void>
+  <void method="put">
+   <string>GENERATE_CONFIG_FILE</string>
+   <string>true</string>
+  </void>
+  <void method="put">
+   <string>AVRDUDE_PATH</string>
+   <string>C:\Tools\avrdude6.3</string>
+  </void>
+  <void method="put">
+   <string>BAUDRATE</string>
+   <string>115200</string>
   </void>
  </object>
 </java>
