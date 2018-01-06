@@ -1,14 +1,9 @@
 package de.saarbastler;
 
 import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,15 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.saarbastler.model.ConfigurationData;
+import de.saarbastler.model.ConfigurationWriter;
 import de.saarbastler.ui.Form;
 import freemarker.cache.TemplateLoader;
-import freemarker.core.ParseException;
 import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import freemarker.template.TemplateNotFoundException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,6 +33,8 @@ import javafx.stage.Stage;
  */
 public class AvrLibTemplate extends Application
 {
+  private static final String CONFIGURATION_FILE = "data.xml";
+
   private static final Logger log = LogManager.getLogger( AvrLibTemplate.class );
 
   private ConfigurationData configurationData;
@@ -102,9 +95,9 @@ public class AvrLibTemplate extends Application
 
   protected void saveData(Map<String, String> values)
   {
-    try (XMLEncoder xmlEncoder = new XMLEncoder( new FileOutputStream( "data.xml" ) ))
+    try
     {
-      xmlEncoder.writeObject( values );
+      ConfigurationWriter.writeConfigurationFile( values, CONFIGURATION_FILE );
     }
     catch (FileNotFoundException e)
     {
@@ -121,7 +114,7 @@ public class AvrLibTemplate extends Application
   @SuppressWarnings("unchecked")
   protected Optional<Map<String, String>> readData()
   {
-    File file = new File( "data.xml" );
+    File file = new File( CONFIGURATION_FILE );
     if (file.exists())
       try (XMLDecoder xmlDecoder = new XMLDecoder( new FileInputStream( file ) ))
       {
@@ -141,16 +134,6 @@ public class AvrLibTemplate extends Application
       }
 
     return Optional.empty();
-  }
-
-  protected void processTemplate(Configuration cfg, String templateName, File destFile, Map<String, String> values)
-      throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException
-  {
-    Template template = cfg.getTemplate( templateName );
-    try (Writer out = new FileWriter( destFile ))
-    {
-      template.process( values, out );
-    }
   }
 
   protected void generateProject(Map<String, String> values)

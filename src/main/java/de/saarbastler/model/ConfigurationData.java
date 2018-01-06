@@ -39,6 +39,8 @@ import freemarker.template.Configuration;
 @XmlSeeAlso({ MkDirs.class, ProcessTemplate.class })
 public class ConfigurationData
 {
+
+  /** The Constant log. */
   private static final Logger log = LogManager.getLogger( ConfigurationData.class );
 
   /** The config file name. */
@@ -58,22 +60,11 @@ public class ConfigurationData
   /** The template executers. */
   @XmlElementWrapper(name = "templateExecuters")
   @XmlElements({ @XmlElement(name = "mkdirs", type = MkDirs.class, required = false),
-      @XmlElement(name = "processTemplate", type = ProcessTemplate.class, required = false) })
+      @XmlElement(name = "processTemplate", type = ProcessTemplate.class, required = false),
+      @XmlElement(name = "configWriter", type = ConfigurationWriter.class, required = false) })
   private List<TemplateExecuter> templateExecuters = new ArrayList<>();
 
-  // /** The UI fields. */
-  // @XmlElementWrapper(name = "fields")
-  // @XmlElements({ @XmlElement(name = "list", type = FieldList.class, required
-  // = false),
-  // @XmlElement(name = "directory", type = FieldDirectory.class, required =
-  // false),
-  // @XmlElement(name = "file", type = FieldFile.class, required = false),
-  // @XmlElement(name = "integer", type = FieldInteger.class, required = false),
-  // @XmlElement(name = "string", type = FieldString.class, required = false),
-  // @XmlElement(name = "boolean", type = FieldCheckbox.class, required = false)
-  // })
-  // private List<Field> fields = new ArrayList<>();
-
+  /** The tabs containing the fields. */
   @XmlElementWrapper
   @XmlElement(name = "tab")
   private List<UITab> tabs = new ArrayList<>();

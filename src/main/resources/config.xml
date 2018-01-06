@@ -26,6 +26,9 @@
 		<mkdirs>
 			<path>${WORKSPACE_DIR}</path>
 		</mkdirs>
+		<configWriter if="${GENERATE_CONFIG_FILE}">
+			<file>${WORKSPACE_DIR}\${ASSEMBLY_NAME}_config.xml</file>
+		</configWriter>
 		<processTemplate>
 			<templateName>atsln.ftlh</templateName>
 			<file>${WORKSPACE_DIR}\${ASSEMBLY_NAME}.atsln</file>
@@ -68,6 +71,19 @@
 		</processTemplate>
 	</templateExecuters>
 	<tabs>
+		<tab>
+			<label>General</label>
+			<fields>
+				<directory>
+					<key>AVR_LIB_PATH_ABS</key>
+					<label>The Saarbastler's Library Path</label>
+				</directory>
+				<boolean>
+					<key>GENERATE_CONFIG_FILE</key>
+					<label>write configuration to project</label>
+				</boolean>
+			</fields>
+		</tab>
 		<tab>
 			<label>CPU</label>
 			<fields>
@@ -143,10 +159,6 @@
 				<directory>
 					<key>WORKSPACE_DIR</key>
 					<label>Workspace Directory</label>
-				</directory>
-				<directory>
-					<key>AVR_LIB_PATH_ABS</key>
-					<label>Library Path</label>
 				</directory>
 				<string>
 					<key>ASSEMBLY_NAME</key>

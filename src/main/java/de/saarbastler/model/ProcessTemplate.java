@@ -17,17 +17,13 @@ import freemarker.template.Template;
  * The Class executes a freemarker template.
  */
 @XmlType(name = "processTemplate")
-public class ProcessTemplate extends TemplateExecuter
+public class ProcessTemplate extends FileExecuter
 {
   private static final Logger log = LogManager.getLogger( ProcessTemplate.class );
 
   /** The template name. */
   @XmlElement
   private String templateName;
-
-  /** The file. */
-  @XmlElement
-  private String file;
 
   /*
    * (non-Javadoc)
