@@ -15,6 +15,9 @@ import java.util.Optional;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.PropertyException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.saarbastler.model.ConfigurationData;
 import de.saarbastler.ui.Form;
 import freemarker.cache.TemplateLoader;
@@ -39,6 +42,8 @@ import javafx.stage.Stage;
  */
 public class AvrLibTemplate extends Application
 {
+  private static final Logger log = LogManager.getLogger( AvrLibTemplate.class );
+
   private ConfigurationData configurationData;
 
   private Stage mainStage;
@@ -47,7 +52,11 @@ public class AvrLibTemplate extends Application
 
   public static void main(String[] args)
   {
+    log.debug( "Avr Library Template generator started" );
+
     launch( args );
+
+    log.debug( "Avr Library Template generator terminated" );
   }
 
   @Override
@@ -165,8 +174,6 @@ public class AvrLibTemplate extends Application
       alert.setHeaderText( "Template generation" );
       alert.setContentText( e.getMessage() );
       alert.showAndWait();
-
-      e.printStackTrace();
     }
   }
 

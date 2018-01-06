@@ -30,11 +30,11 @@
 			<templateName>atsln.ftlh</templateName>
 			<file>${WORKSPACE_DIR}\${ASSEMBLY_NAME}.atsln</file>
 		</processTemplate>
-		<processTemplate>
+		<processTemplate if="${GENERATE_PROGRAM_CMD}">
 			<templateName>program.ftlh</templateName>
 			<file>${WORKSPACE_DIR}\program.cmd</file>
 		</processTemplate>
-		<processTemplate>
+		<processTemplate if="${GENERATE_TERMINAL_CMD}">
 			<templateName>terminal.ftlh</templateName>
 			<file>${WORKSPACE_DIR}\terminal.cmd</file>
 		</processTemplate>
@@ -104,6 +104,10 @@
 						<item>115200</item>
 					</items>
 				</list>
+				<boolean>
+					<key>GENERATE_TERMINAL_CMD</key>
+					<label>Write terminal.cmd file</label>
+				</boolean>
 			</fields>
 		</tab>
 		<tab>
@@ -127,6 +131,10 @@
 						<item>AVR109</item>
 					</items>
 				</list>
+				<boolean>
+					<key>GENERATE_PROGRAM_CMD</key>
+					<label>Write program.cmd file</label>
+				</boolean>
 			</fields>
 		</tab>
 		<tab>

@@ -17,7 +17,7 @@ targetCompatibility = 1.8
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {
 	manifest {
-        attributes 'Implementation-Title': 'Saarbastler Avr Library Templae generator',
+        attributes 'Implementation-Title': 'Saarbastler Avr Library Templat generator',
         	'Implementation-Version': version,
         	'Main-Class': 'de.saarbastler.AvrLibTemplate'
     }
@@ -33,26 +33,12 @@ repositories {
 }
 
 dependencies {
-    // The production code uses the SLF4J logging API at compile time
-    //compile 'org.slf4j:slf4j-api:1.7.25'
-	//compile 'javax.xml.bind:jaxb-api:2.3.0'
-	
+
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+
 	// https://mvnrepository.com/artifact/org.freemarker/freemarker
 	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.27-incubating'
 	
-	//compile group: 'de.odysseus.juel', name: 'juel-api', version: '2.2.7'	
-	//compile group: 'de.odysseus.juel', name: 'juel-impl', version: '2.2.7'
-	//compile group: 'de.odysseus.juel', name: 'juel-spi', version: '2.2.7'
-	
-	
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'	
 }
-
-/*jar {
-  manifest {
-  	attributes (
-	  	'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-	  	'Main-Class': 'de.saarbastler.AvrLibTemplate'
-  	)
-  }
-}*/

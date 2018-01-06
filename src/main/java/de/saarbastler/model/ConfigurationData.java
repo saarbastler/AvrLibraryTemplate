@@ -25,6 +25,9 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.saarbastler.ui.UITab;
 import freemarker.template.Configuration;
 
@@ -36,6 +39,7 @@ import freemarker.template.Configuration;
 @XmlSeeAlso({ MkDirs.class, ProcessTemplate.class })
 public class ConfigurationData
 {
+  private static final Logger log = LogManager.getLogger( ConfigurationData.class );
 
   /** The config file name. */
   public static final String RESOURCE_CONFIG = "config.xml";
@@ -161,6 +165,15 @@ public class ConfigurationData
   public void generateProject(Configuration cfg, Map<String, String> values) throws Exception
   {
     for (TemplateExecuter executer : templateExecuters)
-      executer.execute( cfg, values );
+      try
+      {
+        executer.execute( cfg, values );
+      }
+      catch (Exception e)
+      {
+        log.error( "Exception {} in TemplateExecuter {}", e.getMessage(), executer );
+        log.catching( e );
+        throw e;
+      }
   }
 }
