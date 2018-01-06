@@ -9,16 +9,12 @@ import javafx.stage.Window;
 /**
  * The super Class of all Fields.
  */
-public abstract class Field
+public abstract class Field extends UIObject
 {
 
   /** The entered value will be stored using this key */
   @XmlElement
   private String key;
-
-  /** The label shown to the user. */
-  @XmlElement
-  protected String label;
 
   /**
    * Gets the entered value.

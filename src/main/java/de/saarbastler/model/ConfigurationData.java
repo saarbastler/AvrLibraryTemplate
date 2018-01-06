@@ -25,12 +25,7 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import de.saarbastler.ui.Field;
-import de.saarbastler.ui.FieldDirectory;
-import de.saarbastler.ui.FieldFile;
-import de.saarbastler.ui.FieldInteger;
-import de.saarbastler.ui.FieldList;
-import de.saarbastler.ui.FieldString;
+import de.saarbastler.ui.UITab;
 import freemarker.template.Configuration;
 
 /**
@@ -62,14 +57,22 @@ public class ConfigurationData
       @XmlElement(name = "processTemplate", type = ProcessTemplate.class, required = false) })
   private List<TemplateExecuter> templateExecuters = new ArrayList<>();
 
-  /** The UI fields. */
-  @XmlElementWrapper(name = "fields")
-  @XmlElements({ @XmlElement(name = "list", type = FieldList.class, required = false),
-      @XmlElement(name = "directory", type = FieldDirectory.class, required = false),
-      @XmlElement(name = "file", type = FieldFile.class, required = false),
-      @XmlElement(name = "integer", type = FieldInteger.class, required = false),
-      @XmlElement(name = "string", type = FieldString.class, required = false) })
-  private List<Field> fields = new ArrayList<>();
+  // /** The UI fields. */
+  // @XmlElementWrapper(name = "fields")
+  // @XmlElements({ @XmlElement(name = "list", type = FieldList.class, required
+  // = false),
+  // @XmlElement(name = "directory", type = FieldDirectory.class, required =
+  // false),
+  // @XmlElement(name = "file", type = FieldFile.class, required = false),
+  // @XmlElement(name = "integer", type = FieldInteger.class, required = false),
+  // @XmlElement(name = "string", type = FieldString.class, required = false),
+  // @XmlElement(name = "boolean", type = FieldCheckbox.class, required = false)
+  // })
+  // private List<Field> fields = new ArrayList<>();
+
+  @XmlElementWrapper
+  @XmlElement(name = "tab")
+  private List<UITab> tabs = new ArrayList<>();
 
   /**
    * Load the XML config.
@@ -112,9 +115,13 @@ public class ConfigurationData
    *
    * @return the fields
    */
-  public List<Field> getFields()
+  // public List<Field> getFields()
+  // {
+  // return fields;
+  // }
+  public List<UITab> getTabs()
   {
-    return fields;
+    return tabs;
   }
 
   /**
